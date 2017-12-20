@@ -1,8 +1,17 @@
+/* GENERAL RECOMMENDER SYSTEM */
+
+/* The query below uses the main ratings table (ML_RATINGS) to count users, items and the actual ratings.  
+We can also count the number of users (ML_USERS) and movies (ML_ITEMS) in the other tables, but we are more interested 
+in the participation in the ratings. */
+
 SELECT
     COUNT(DISTINCT user_id) AS user_tally,
     COUNT(DISTINCT item_id) AS item_tally,
     COUNT(*) AS rating_tally
 FROM relmdb.ml_ratings;
+
+/* The query below outputs the no. of ratings (rating_tally) he/she rated.  The minimum number of ratings per user is 20 
+set by movielens 100k (1998) dataset */
 
 SELECT
     user_id,
@@ -10,6 +19,10 @@ SELECT
 FROM relmdb.ml_ratings 
 GROUP BY user_id
 ORDER BY COUNT(item_id) DESC;
+
+/*This query returns a histogram based on the number of ratings (rounded to multiples of 10) by users, 
+which gives us a much better idea about the distribution of ratings.There are plenty of users with significant 
+numbers of ratings. */
 
 SELECT
     rating_bin,
